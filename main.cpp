@@ -93,9 +93,9 @@ int main() {
     cout << "Welcome to our Stock Manager!" << endl;
 
     do{
-        cout << "What do you want to do? Print collection (1), add Stock (2), search for Stock (3), delete Stock(4), print Plot (5)" << endl;
+        cout << "What do you want to do? Print collection (1), add Stock (2), search for Stock (3), delete Stock(4), print Plot (5), save Date (6)" << endl;
         cin >> input;
-        if (input != 1 && input != 2 && input != 3 && input != 4 && input != 0 && input !=5){
+        if (input != 1 && input != 2 && input != 3 && input != 4 && input != 0 && input !=5 && input !=6){
             cout << "Input was not valid. Try again! Print collection (1), add Stock (2), search for Stock (3), delete Stock(4), print Plot (5)";
             cin >> input;
         }
@@ -144,8 +144,15 @@ int main() {
                     cout << "Aktie nicht gefunden." << endl;
                 }
         }
+        else if (input == 6) { // Nehmen wir an, 6 steht für SAVE
+            string filename;
+            cout << "Geben Sie den Dateinamen ein, in den Sie speichern möchten: ";
+            cin >> filename;
+            allStocks.saveToFile(filename);
+        }
 
-        } while (input != 0);
+
+    } while (input != 0);
 
     return 0;
 }

@@ -16,6 +16,7 @@ public:
     unsigned long hashFunction(string name) const;
     void deleteStock(const string& name);
     void printAll() const;
+    void saveToFile(const string& filename) const;
 
 private:
     int tableSize_;

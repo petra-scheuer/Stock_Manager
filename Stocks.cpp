@@ -1,4 +1,5 @@
 #include "Stocks.h"
+#include <fstream>
 
 Stocks::Stocks() :  tableSize_(1334), stocks_(tableSize_) {
 }
@@ -60,4 +61,40 @@ void Stocks::printAll() const {
             item.printData();  // Print the item's data
         }
     }
+}
+void Stocks::saveToFile(const string& filename) const {
+    ofstream file(filename);
+
+    if (!file.is_open()) {
+        cout << "Konnte die Datei nicht zum Speichern öffnen." << endl;
+        return;
+    }
+
+    // Write the header
+    file << "Date,Open,High,Low,Close,Adj Close,Volume,Aktie\n";
+
+    for (const auto& bucket : stocks_) {
+        for (const auto& stock : bucket) {
+            // Get the performances for the stock
+            const auto& performances = stock.getPerformance();
+            for (const auto& performance : performances) {
+                // Write data in the desired format with commas as delimiters
+                // Ensure numeric values use period as the decimal separator
+                // Convert date to desired format with periods
+                file << performance.getDay() << "."
+                     << performance.getMonth() << "."
+                     << performance.getYear() << ","
+                     << performance.getOpen() << ","
+                     << performance.getHigh() << ","
+                     << performance.getLow() << ","
+                     << performance.getClose() << ","
+                     << performance.getAdjClose() << ","
+                     << performance.getVolume() << ","
+                     << stock.getAbbreviation() << "\n"; // Use abbreviation for "Aktie"
+            }
+        }
+    }
+
+    file.close();
+    cout << "Daten erfolgreich in " << filename << " gespeichert." << endl;
 }
